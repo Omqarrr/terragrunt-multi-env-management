@@ -6,8 +6,10 @@ parallel_apply: true
 projects:
 - name: environments
   dir: ./environments/dev
+  workflow: terragrunt
   autoplan:
     enabled: true
-#   apply_requirements: [approved]
-#   workflow: terragrunt
     when_modified: ["*.hcl"]
+#   apply_requirements: [approved]
+  
+    
