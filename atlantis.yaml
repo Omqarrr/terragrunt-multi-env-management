@@ -8,5 +8,5 @@ projects:
   dir: ./environments/dev
   autoplan:
     enabled: true
-  apply_requirements: [approved]
-#  workflow: terragrunt
+#   apply_requirements: [approved]
+#   workflow: terragrunt
