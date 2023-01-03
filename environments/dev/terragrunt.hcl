@@ -7,7 +7,7 @@ inputs = {
   profile = "psl-aws"
   public_az   = ["ap-south-1a", "ap-south-1b"]
   private_az  = ["ap-south-1a", "ap-south-1b"]
-  environment = "Dev"
+  environment = "Develop"
 }
 
 include "root" {
