@@ -123,23 +123,21 @@ image:
 ## Use Server Side Repo Config,
 ## ref: https://www.runatlantis.io/docs/server-side-repo-config.html
 ## Example default configuration
-# repoConfig: |
-#   ---
-#   repos:
-#   - id: /.*/
-#     apply_requirements: [approved]
-#     workflow: myworkflow
-#     allowed_overrides: []
-#     allowed_workflow: [myworkflow]
-#     allow_custom_workflows: false
-#   workflows:
-#     myworkflow:
-#       plan:
-#         steps:
-#         - run: terragrunt plan -input=false
-#       apply:
-#         steps:
-#         - run: terragrunt apply -input=false
+repoConfig: |
+   ---
+   repos:
+   - id: /.*/
+     apply_requirements: [approved]
+     allowed_overrides: []
+     allow_custom_workflows: false
+   workflows:
+     terragrunt:
+       plan:
+         steps:
+         - run: terragrunt plan -input=false
+       apply:
+         steps:
+         - run: terragrunt apply -input=false
 # allowForkPRs enables atlantis to run on a fork Pull Requests
 allowForkPRs: false
 
