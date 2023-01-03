@@ -1,4 +1,4 @@
-## -------------------------- ##
+=## -------------------------- ##
 # Values to override for your instance.
 ## -------------------------- ##
 
@@ -13,7 +13,7 @@ orgWhitelist: github.com/Omqarrr/terragrunt-multi-env-management
 # If using GitHub, specify like the following:
 github:
  user: Jeevaann
- token: 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
+ token: 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
  secret: TWtyteYoqXUC90d1k4FF
 # GitHub Enterprise only:
 # hostname:
@@ -85,11 +85,11 @@ github:
 
 # To specify AWS credentials to be mapped to ~/.aws or to aws.directory:
 aws: {}
-#   credentials: |
-#     [default]
-#     aws_access_key_id=YOUR_ACCESS_KEY_ID
-#     aws_secret_access_key=YOUR_SECRET_ACCESS_KEY
-#     region=us-east-1
+  credentials: |
+    [default]
+    aws_access_key_id=AKIAWT4IN5FUK7DZOJ4X
+    aws_secret_access_key=Llcnd7rEbLgmnU9U4pG0oscYQHcirdIXJvCumuzl
+    region=us-east-1
 #   config: |
 #     [profile a_role_to_assume]
 #     role_arn = arn:aws:iam::123456789:role/service-role/roleToAssume
@@ -124,21 +124,27 @@ image:
 ## ref: https://www.runatlantis.io/docs/server-side-repo-config.html
 ## Example default configuration
 repoConfig: |
-   ---
-   repos:
-   - id: /.*/
-     apply_requirements: [approved]
-     allowed_overrides: []
-     allow_custom_workflows: false
-   workflows:
-     terragrunt:
-       plan:
-         steps:
-         - init
-         - run: terragrunt plan -input=false
-       apply:
-         steps:
-         - run: terragrunt apply -input=false
+  ---
+  repos:
+  - id: /.*/
+    apply_requirements: [approved]
+    allow_custom_workflows: false
+    allowed_overrides: [workflow]
+  workflows:
+    terragrunt:
+      plan:
+        steps:
+        - env:
+           name: TERRAGRUNT_TFPATH
+           command: 'echo "terraform${ATLANTIS_TERRAFORM_VERSION}"'
+        - run: terragrunt plan -input=false 
+        - run: terragrunt show 
+      apply:
+        steps:
+        - env:
+           name: TERRAGRUNT_TFPATH
+           command: 'echo "terraform${ATLANTIS_TERRAFORM_VERSION}"'
+        - run: terragrunt apply -input=false
 # allowForkPRs enables atlantis to run on a fork Pull Requests
 allowForkPRs: false
 
@@ -210,8 +216,13 @@ podTemplate:
 
 # It is not recommended to run atlantis as root
 statefulSet:
+  annotations: {}
+  labels: {}
   securityContext:
+  priorityClassName: ""
+  updateStrategy: {}
   # option to share process namespace with atlantis container
+  shareProcessNamespace: false
 
 ## Optionally customize the terminationGracePeriodSeconds
 # terminationGracePeriodSeconds: 60
@@ -309,6 +320,10 @@ serviceAccount:
 enableKubernetesBackend: false
 
 # tlsSecretName: tls
+
+# environment: {}
+environment:
+  ATLANTIS_TERRAFORM_VERSION: v1.3.5
 
 # Optionally specify additional environment variables to be populated from Kubernetes secrets.
 # Useful for passing in TF_VAR_foo or other secret environment variables from Kubernetes secrets.
