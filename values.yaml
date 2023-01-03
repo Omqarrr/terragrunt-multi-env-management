@@ -134,7 +134,7 @@ repoConfig: |
      terragrunt:
        plan:
          steps:
-         - run: terragrunt init -input=false
+         - init
          - run: terragrunt plan -input=false
        apply:
          steps:
