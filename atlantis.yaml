@@ -9,4 +9,4 @@ projects:
   autoplan:
     enabled: true
   apply_requirements: [approved]
-  workflow: terragrunt
+#  workflow: terragrunt
