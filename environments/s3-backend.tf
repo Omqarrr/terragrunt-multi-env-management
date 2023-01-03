@@ -4,6 +4,7 @@ terraform {
         bucket = "terraform-multi-env-management"
         key = "./terraform.tfstate"
         region = "us-east-1"
+        profile = "psl-aws"
         encrypt = "true"
     }
 }
