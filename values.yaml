@@ -132,9 +132,11 @@ repoConfig: |
      allow_custom_workflows: false
    workflows:
      terragrunt:
+       init:
+         steps:
+         - run: terragrunt init -input=false
        plan:
          steps:
-         - init
          - run: terragrunt plan -input=false
        apply:
          steps:
